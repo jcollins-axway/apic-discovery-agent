@@ -1,4 +1,5 @@
 .PHONY: all dep test lint build 
+PROJECT_NAME := apic-discovery-agents
 
 WORKSPACE ?= $$(pwd)
 
@@ -10,7 +11,6 @@ lint:
 dep:
 	@echo "Resolving go package dependencies"
 	@go mod tidy
-	@go mod vendor
 	@echo "Package dependencies completed"
 
 update-sdk:
@@ -31,3 +31,7 @@ ${WORKSPACE}/apic_discovery_agent: dep
 
 build:${WORKSPACE}/apic_discovery_agent
 	@echo "Build complete"
+
+docker: dep
+	docker build -t $(PROJECT_NAME):latest -f ${WORKSPACE}/build/docker/Dockerfile .
+	@echo "Docker build complete"
