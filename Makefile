@@ -35,3 +35,7 @@ build:${WORKSPACE}/apic_discovery_agent
 docker: dep
 	docker build -t $(PROJECT_NAME):latest -f ${WORKSPACE}/build/docker/Dockerfile .
 	@echo "Docker build complete"
+
+docker-push: docker
+	docker tag $(PROJECT_NAME):latest jcollins7227/beano:$(PROJECT_NAME)
+	docker push jcollins7227/beano:$(PROJECT_NAME)
